@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS analytics CASCADE;
+
+CREATE TABLE analytics (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
+  answered TEXT,
+  score INTEGER
+);
