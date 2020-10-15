@@ -19,6 +19,21 @@ module.exports = (db) => {
       .catch((err) => err);
   };
 
+  const loginUser = (user, db) => {
+    const email = user.email;
+    const password = user.password;
+
+    const query = `
+    SELECT * FROM users
+    WHERE email = $1;
+    `;
+
+    return db
+      .query(query, [email])
+      .then((res) => res.rows[0])
+      .catch((err) => err);
+  };
+
   router.get("/", (req, res) => {
     return db
       .query(
@@ -41,6 +56,19 @@ module.exports = (db) => {
         [userID]
       )
       .then((user) => res.json(user.rows));
+  });
+
+
+  router.post("/authenticate", (req, res) => {
+    loginUser(req.body, db).then((user) => {
+      if (!user) {
+        res.send({ error: "error" });
+        return;
+      }
+      console.log(user)
+      req.session.user_id = user.id;
+      res.redirect("/");
+    });
   });
 
   router.post("/", (req, res) => {
