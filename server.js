@@ -2,11 +2,13 @@ require('dotenv').config()
 const bodyParser = require("body-parser");
 const express = require('express');
 const morgan     = require('morgan');
+var cors = require('cors');
 
 app = express(),
-port = process.env.PORT || 3000;
+port = process.env.PORT || 5000;
 app.use(morgan('dev'));
 app.use(bodyParser.json({extend:true}))
+app.use(cors())
 const { Pool } = require('pg');
 const dbParams = require('./db/db.js');
 const db = new Pool(dbParams);

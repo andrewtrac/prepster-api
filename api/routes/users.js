@@ -5,17 +5,16 @@ module.exports = (db) => {
 
 
   const addUser = (user, db) => {
-    const name = user.name;
     const email = user.email;
+    const password = user.password;
+
 
     const query = `
-    INSERT INTO users (name, email)
-    VALUES ($1, $2)
-    RETURNING *;
-    `;
+    INSERT INTO users (email, password)
+    VALUES ($1, $2);    `;
 
     return db
-      .query(query, [name, email])
+      .query(query, [email, password])
       .then((res) => res.rows[0])
       .catch((err) => err);
   };
