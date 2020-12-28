@@ -21,7 +21,6 @@ module.exports = (db) => {
 
   const loginUser = (user, db) => {
     const email = user.email;
-    const password = user.password;
 
     const query = `
     SELECT * FROM users
@@ -64,10 +63,9 @@ module.exports = (db) => {
       if (!user) {
         res.send({ error: "error" });
         return;
+      } else {
+        res.send(user)
       }
-      console.log(user)
-      req.session.user_id = user.id;
-      res.redirect("/");
     });
   });
 
