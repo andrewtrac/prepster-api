@@ -76,7 +76,6 @@ module.exports = (db) => {
         return;
       }
       req.session.user_id = user.id;
-      res.redirect("/");
     });
   });
 
