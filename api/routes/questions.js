@@ -2,16 +2,27 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-  router.get("/:id'", (req, res) => {
-    const questionCategory = req.params.id;
+
+  router.get("/", (req, res) => {
+    return db
+      .query(
+        `
+  SELECT * FROM questions;
+  `
+      )
+      .then((data) => res.json(data.rows));
+  });
+
+
+  router.get("/:id", (req, res) => {
 
     return db
       .query(
         `
-  SELECT * FROM users
-  WHERE $1=ANY(categories)
+  SELECT * FROM questions
+  WHERE $1 = ANY(categories);
   `,
-        [questionCategory]
+        [req.params.id]
       )
       .then((questions) => res.json(questions.rows));
   });
