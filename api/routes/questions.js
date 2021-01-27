@@ -3,16 +3,6 @@ const router = express.Router();
 
 module.exports = (db) => {
 
-  router.get("/", (req, res) => {
-    return db
-      .query(
-        `
-  SELECT * FROM questions;
-  `
-      )
-      .then((data) => res.json(data.rows));
-  });
-
 
   router.get("/:id", (req, res) => {
 
