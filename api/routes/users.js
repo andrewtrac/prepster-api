@@ -2,12 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
-
   const addUser = (user, db) => {
     const email = user.email;
     const password = user.password;
-
 
     const query = `
     INSERT INTO users (email, password)
@@ -40,7 +37,8 @@ module.exports = (db) => {
   SELECT * FROM users;
   `
       )
-      .then((data) => res.json(data.rows));
+      .then((data) => res.json(data.rows))
+      .catch((err) => err);
   });
 
   router.get("/name", (req, res) => {
@@ -54,9 +52,9 @@ module.exports = (db) => {
   `,
         [userID]
       )
-      .then((user) => res.json(user.rows));
+      .then((user) => res.json(user.rows))
+      .catch((err) => err);
   });
-
 
   router.post("/authenticate", (req, res) => {
     loginUser(req.body, db).then((user) => {
@@ -64,7 +62,7 @@ module.exports = (db) => {
         res.send({ error: "error" });
         return;
       } else {
-        res.send(user)
+        res.send(user);
       }
     });
   });

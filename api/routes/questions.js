@@ -2,10 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
-
-
   router.get("/:id", (req, res) => {
-
     return db
       .query(
         `
@@ -14,7 +11,8 @@ module.exports = (db) => {
   `,
         [req.params.id]
       )
-      .then((questions) => res.json(questions.rows));
+      .then((questions) => res.json(questions.rows))
+      .catch((err) => err);
   });
 
   return router;
